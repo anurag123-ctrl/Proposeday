@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>A Special Message</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <!-- Background -->
+    <div class="bg-container"></div>
+
+    <!-- Content -->
+    <div class="content">
+        <div id="text-container">Loading...</div>
+
+        <!-- Navigation Buttons -->
+        <div class="buttons">
+            <button class="nav-btn" onclick="prevMessage()">❮ Previous</button>
+            <button class="nav-btn" onclick="nextMessage()">Next ❯</button>
+        </div>
+    </div>
+
+    <style>
+        /* General Styling */
+        body,
+        html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            width: 100%;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            text-align: center;
+            overflow: hidden;
+        }
+
+        /* Background Styling */
+        .bg-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url("https://i.pinimg.com/originals/51/d8/37/51d8374126446d495348b6032202126f.jpg");
+            background-size: cover;
+            background-position: center;
+            filter: brightness(0.7);
+            z-index: -1;
+        }
+
+        /* Content Box */
+        .content {
+            position: relative;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            box-sizing: border-box;
+            color: white;
+        }
+
+        /* Message Box */
+        #text-container {
+            max-width: 800px;
+            min-height: 120px;
+            background: rgba(0, 0, 0, 0.6);
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+            font-size: 1.8rem;
+            line-height: 1.6;
+            margin: 20px;
+            backdrop-filter: blur(5px);
+            transition: opacity 0.5s ease, transform 0.5s ease;
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Button Styling */
+        .buttons {
+            display: flex;
+            gap: 20px;
+            margin-top: 100px;
+            /* Adjusted buttons further down */
+        }
+
+        .nav-btn {
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            padding: 12px 20px;
+            font-size: 18px;
+            color: white;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: transform 0.3s ease, background 0.3s ease;
+        }
+
+        .nav-btn:hover {
+            background: rgba(255, 255, 255, 0.5);
+            transform: scale(1.1);
+        }
+
+        /* Music Controls */
+        .music-controls {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: rgba(255, 255, 255, 0.2);
+            padding: 10px;
+            border-radius: 50px;
+            backdrop-filter: blur(5px);
+        }
+
+        .btn-music {
+            background: none;
+            border: none;
+            color: white;
+            cursor: pointer;
+            font-size: 28px;
+            padding: 12px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        /* Hover effect */
+        .btn-music:hover {
+            transform: scale(1.2);
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.6);
+        }
+    </style>
+
+    <!-- Music Controls -->
+    <div class="music-controls">
+        <button class="btn-music" onclick="toggleMusic()">♪</button>
+    </div>
+
+    <audio id="bgMusic" loop>
+        <source src="audio/ishq-hai.mp3" type="audio/mpeg">
+    </audio>
+
+    <script>
+       // Messages Array  
+const messages = [  
+    "Hello Riya… I have to say something ❤️",  
+    "First, click on the music icon 🎵 and feel every word I say…",  
+    "You’re not just my best friend… you are my *forever person* 💖",  
+    "No matter how much time passes, my feelings for you will never change ⏳❤️",  
+    "The way I saw you the first time is the same as always 😊",  
+    "I’ll say it again… I will feel the same about you till my last breath 💞",  
+    "Sometimes I don't express because it hurts, and I'm scared of your reaction 💫",  
+    "I never imagined we would meet the way we did ☀️",  
+    "The first time you touched me, it was indescribable 💕",  
+    "That trip was special, and I will remember it forever 🏡💖",  
+    "I got stuck a lot on that trip, but you made me feel comfortable ❤️‍🔥",  
+    "Moving back to Delhi felt like losing something precious 🥰",  
+    "I think about you every day, but I can't fully express my feelings 📖💕",  
+    "The way I care for and admire you… it’s more than just friendship 💘",  
+    "Even if I never say it, I hope you always feel how much I love you ❤️",  
+    "You’re not just in my heart… you *are* my heart, my everything 💞",  
+    "If I could make one wish, it would be to always have you by my side ✨",  
+    "I don’t need grand moments—just simple ones with you make me happiest 💛",  
+    "If I could freeze time, I’d live in every moment spent with you ⏳💜",  
+    "The way I feel about you is beyond words… my heart whispers your name daily 💗",  
+    "I never believed in ‘meant to be’ until I met you 🌟",  
+    "The world may change, time may pass, but my love for you will remain 💘",  
+    "And lastly, one day, I want to hear your true feelings about me 😍💓",  
+    "So here’s the truth… you are my best friend, my happiness, and the love I will cherish forever ❤️"  
+];  
+
+
+
+
+        let currentIndex = 0; // Start from the first message
+
+        // Function to update message
+        function updateMessage() {
+            const textContainer = document.getElementById("text-container");
+            textContainer.style.opacity = 0; // Fade out
+            setTimeout(() => {
+                textContainer.innerHTML = messages[currentIndex];
+                textContainer.style.opacity = 1; // Fade in
+            }, 300);
+        }
+
+        // Function for Next Message
+        function nextMessage() {
+            if (currentIndex < messages.length - 1) {
+                currentIndex++;
+                updateMessage();
+            }
+        }
+
+        // Function for Previous Message
+        function prevMessage() {
+            if (currentIndex > 0) {
+                currentIndex--;
+                updateMessage();
+            }
+        }
+
+        // Function to toggle music
+        function toggleMusic() {
+            let music = document.getElementById("bgMusic");
+            if (music.paused) {
+                music.play();
+            } else {
+                music.pause();
+            }
+        }
+
+        // Load first message on page load
+        document.addEventListener("DOMContentLoaded", updateMessage);
+    </script>
+
+</body>
+
+</html>

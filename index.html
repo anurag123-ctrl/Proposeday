@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Love</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <form id="login-form">
+        <label for="code">Enter Your Name:</label>
+        <input type="password" id="code" name="code" placeholder="Your Name">
+        <button id="submit-btn">Login</button>
+    </form>
+    <div id="result"></div>
+
+    <style>
+        /* General Styles */
+        body {
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            font-family: Arial, sans-serif;
+            background: url('./love.jpg') no-repeat center center/cover;
+            transition: 0.3s ease-in-out;
+        }
+
+        /* Form Styling */
+        #login-form {
+            background: rgba(128, 0, 128, 0.5);
+            backdrop-filter: blur(15px);
+            padding: 30px;
+            border-radius: 15px;
+            text-align: center;
+            width: 400px; /* Increased default size */
+            max-width: 95%;
+            box-shadow: 0 0 25px rgba(128, 0, 128, 0.6);
+            transition: 0.3s ease-in-out;
+        }
+
+        label {
+            display: block;
+            font-size: 22px;
+            color: #fff;
+            margin-bottom: 12px;
+        }
+
+        input[type="password"] {
+            width: 100%;
+            padding: 16px;
+            border: none;
+            border-radius: 10px;
+            background: rgba(255, 255, 255, 0.3);
+            color: #fff;
+            font-size: 20px;
+            outline: none;
+            transition: 0.3s ease-in-out;
+        }
+
+        input[type="password"]:focus {
+            background: rgba(255, 255, 255, 0.4);
+            box-shadow: 0 0 15px rgba(255, 255, 255, 0.4);
+        }
+
+        input[type="password"]::placeholder {
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 18px;
+        }
+
+        /* Button */
+        #submit-btn {
+            width: 100%;
+            padding: 16px;
+            margin-top: 15px;
+            border: none;
+            border-radius: 10px;
+            background: linear-gradient(45deg, #800080, #a020f0);
+            color: #fff;
+            font-size: 20px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        #submit-btn:hover {
+            background: linear-gradient(45deg, #a020f0, #c040ff);
+            transform: scale(1.08);
+        }
+
+        /* Result Div */
+        #result {
+            margin-top: 20px;
+            color: #fff;
+            font-size: 22px;
+            text-align: center;
+        }
+
+        /* Media Query for Mobile */
+        @media screen and (max-width: 600px) {
+            body {
+                background: url('./love.jpg') no-repeat center center/cover; /* Different background for mobile */
+                flex-direction: column;
+                padding: 20px;
+            }
+
+            #login-form {
+                width: 77%; /* Increase width on mobile */
+                padding: 35px; /* More padding for better look */
+                border-radius: 18px;
+            }
+
+            label {
+                font-size: 24px; /* Bigger text */
+            }
+
+            input[type="password"] {
+                font-size: 22px;
+                padding: 18px;
+                border-radius: 12px;
+            }
+
+            #submit-btn {
+                font-size: 22px;
+                padding: 18px;
+                border-radius: 12px;
+            }
+
+            #result {
+                font-size: 24px;
+            }
+        }
+    </style>
+
+    <script src="script.js"></script>
+</body>
+</html>
