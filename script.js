@@ -14,7 +14,7 @@ form.addEventListener("submit", (e) => {
     window.location.href = nextPageUrl; // Redirect to new page
   } else {
     resultDiv.innerHTML =
-      "Naa Tum meri baby nhi hoo kon hooo tum kaha hai meri Sona";
+      "Wrong answer betu, Sahi se type karo yaar😂";
   }
 });
 
